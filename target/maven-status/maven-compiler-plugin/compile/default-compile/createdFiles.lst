@@ -1,0 +1,11 @@
+bg\fmi\vaultmanagerclient\payload\ProjectResponse.class
+bg\fmi\vaultmanagerclient\component\VaultManagerProvider$1.class
+bg\fmi\vaultmanagerclient\configuration\VaultManagerConfiguration.class
+bg\fmi\vaultmanagerclient\util\InMemoryCache$CacheObject.class
+bg\fmi\vaultmanagerclient\util\InMemoryCache.class
+bg\fmi\vaultmanagerclient\util\VaultManagerUtils.class
+bg\fmi\vaultmanagerclient\annotation\EnableVaultManager.class
+bg\fmi\vaultmanagerclient\component\VaultManagerProvider.class
+bg\fmi\vaultmanagerclient\payload\LoginRequest.class
+bg\fmi\vaultmanagerclient\payload\ProjectResponse$ProjectResponseBuilder.class
+bg\fmi\vaultmanagerclient\payload\LoginRequest$LoginRequestBuilder.class
