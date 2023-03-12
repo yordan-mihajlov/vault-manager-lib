@@ -16,10 +16,10 @@ import java.util.*;
 @Component
 public class VaultManagerProvider {
 
-    public static final String API_PROJECT_GET_CONFIGS = "/api/project/get-configs?projectName=";
+    public static final String API_PROJECT_GET_CONFIGS = "/api/project/get-configs?configName=";
 
-    @Value("#{'${vault.manager.projectnames}'.split(',')}")
-    private List<String> projectNames;
+    @Value("#{'${vault.manager.configNames}'.split(',')}")
+    private List<String> configNames;
 
     @Value("${vault.manager.api.url}")
     private String url;
@@ -41,23 +41,23 @@ public class VaultManagerProvider {
 
     public Map<String, Map<String, String>> getProperties() {
         Map<String, Map<String, String>> projectsProps= new HashMap<>();
-        projectNames.forEach(projectName -> {
+        configNames.forEach(configName -> {
             Map<String, String> props = null;
             if(inMemoryCache != null) {
-                props = (Map) inMemoryCache.get(projectName);
+                props = (Map) inMemoryCache.get(configName);
             }
 
             if(props == null) {
                 System.out.println("FROM SERVICE");
                 props = new RestTemplate().exchange
-                        (url + API_PROJECT_GET_CONFIGS + projectName,
+                        (url + API_PROJECT_GET_CONFIGS + configName,
                                 HttpMethod.GET, new HttpEntity<>(createAuthHeader()), ProjectResponse.class)
                         .getBody().getConfigurations();
                 if(inMemoryCache != null) {
-                    inMemoryCache.add(projectName, props, cacheTimeout * 1000);
+                    inMemoryCache.add(configName, props, cacheTimeout * 1000);
                 }
             }
-            projectsProps.put(projectName, props);
+            projectsProps.put(configName, props);
         });
 
         return projectsProps;
