@@ -5,9 +5,9 @@
 
 
     <groupId>bg.fmi</groupId>
-    <artifactId>vault-manager-client</artifactId>
+    <artifactId>vault-manager-lib</artifactId>
     <version>1.0</version>
-    <name>vault-manager-client</name>
+    <name>vault-manager-lib</name>
     <packaging>jar</packaging>
 
     <properties>
