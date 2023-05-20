@@ -16,7 +16,7 @@ import java.util.*;
 @Component
 public class VaultManagerProvider {
 
-    public static final String API_PROJECT_GET_CONFIGS = "/api/project/get-configs?configName=";
+    public static final String API_PROJECT_GET_CONFIGS = "/api/config/get-data?configName=";
 
     @Value("#{'${vault.manager.configNames}'.split(',')}")
     private List<String> configNames;
@@ -24,15 +24,16 @@ public class VaultManagerProvider {
     @Value("${vault.manager.api.url}")
     private String url;
 
-    @Autowired
-    private VaultManagerUtils vaultManagerUtils;
+    private final VaultManagerUtils vaultManagerUtils;
 
     private InMemoryCache inMemoryCache;
 
     private final Integer cacheTimeout;
 
     public VaultManagerProvider(@Value("${vault.manager.config.cache.timeout:0}") Integer cacheTimeout,
-                                @Value("${vault.manager.config.cache.enabled:false}") Boolean cacheEnabled) {
+                                @Value("${vault.manager.config.cache.enabled:false}") Boolean cacheEnabled,
+                                VaultManagerUtils vaultManagerUtils) {
+        this.vaultManagerUtils = vaultManagerUtils;
         if (cacheEnabled) {
             inMemoryCache = new InMemoryCache(cacheTimeout);
         }
@@ -48,7 +49,6 @@ public class VaultManagerProvider {
             }
 
             if(props == null) {
-                System.out.println("FROM SERVICE");
                 props = new RestTemplate().exchange
                         (url + API_PROJECT_GET_CONFIGS + configName,
                                 HttpMethod.GET, new HttpEntity<>(createAuthHeader()), ProjectResponse.class)
